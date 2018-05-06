@@ -11,27 +11,26 @@ public class Book {
     private long id;
     private String title;
     private String isbn;
+    @OneToOne
+    private  Publisher publisher;
     @ManyToMany
     @JoinTable(name = "author_book", joinColumns = @JoinColumn(name = "book_id"),
             inverseJoinColumns = @JoinColumn(name = "author_id"))
     private Set<Author> authors = new HashSet<>();
 
-    @OneToOne
-
-    private  Set<Publisher> publishers = new HashSet<>();
     public Book() {
     }
 
-    public Book(String title, String isbn) {
+    public Book(String title, String isbn, Publisher publisher) {
         this.title = title;
         this.isbn = isbn;
     }
 
-    public Book(String title, String isbn, String publisher, Set<Author> authors, Set<Publisher> publishers) {
+    public Book(String title, String isbn, Publisher publisher, Set<Author> authors) {
         this.title = title;
         this.isbn = isbn;
         this.authors = authors;
-        this.publishers = publishers;
+        this.publisher = publisher;
     }
 
     public long getId() {
@@ -67,12 +66,12 @@ public class Book {
         this.authors = authors;
     }
 
-    public Set<Publisher> getPublishers() {
-        return publishers;
+    public Publisher getPublisher() {
+        return publisher;
     }
 
-    public void setPublishers(Set<Publisher> publishers) {
-        this.publishers = publishers;
+    public void setPublisher(Publisher publisher) {
+        this.publisher = publisher;
     }
 
     @Override
@@ -97,7 +96,7 @@ public class Book {
                 "id=" + id +
                 ", title='" + title + '\'' +
                 ", isbn='" + isbn + '\'' +
-                ", publisher='" + publishers + '\'' +
+                ", publisher='" + publisher + '\'' +
                 ", authors=" + authors +
                 '}';
     }
